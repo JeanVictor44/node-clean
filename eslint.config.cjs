@@ -5,6 +5,7 @@ module.exports = (async function config() {
     {
       ...love,
       files: ['**/*.js', '**/*.ts'],
+      ignores: ['**/node_modules/**, **/dist/**'],
     },
   ]
 })()
