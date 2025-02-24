@@ -5,7 +5,10 @@ module.exports = (async function config() {
     {
       ...love,
       files: ['**/*.js', '**/*.ts'],
-      ignores: ['**/node_modules/**, **/dist/**'],
+      ignores: ['**/node_modules/**, **/dist/**', '**/coverage/**'],
+      rules: {
+        '@typescript-eslint/class-methods-use-this': 'off',
+      },
     },
   ]
 })()
