@@ -3,7 +3,8 @@ export class SignupController {
         const NoResourceFoundStatusCode = 400
          
         return {
-            statusCode: NoResourceFoundStatusCode
+            statusCode: NoResourceFoundStatusCode,
+            body: new Error('Missing param: name')
         }
     }
 }
