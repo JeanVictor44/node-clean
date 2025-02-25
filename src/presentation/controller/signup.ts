@@ -1,3 +1,4 @@
+import { MissingParamError } from "../errors/missing-param-error"
 import { HttpRequest, HttpResponse } from "../protocols/http"
 
 export class SignupController {
@@ -6,14 +7,14 @@ export class SignupController {
         if (!httpRequest.body.name){
             return {
                 statusCode: NoResourceFoundStatusCode,
-                body: new Error('Missing param: name')
+                body: new MissingParamError('name')
             }
         }
 
         if(!httpRequest.body.email){
             return {
                 statusCode: NoResourceFoundStatusCode,
-                body: new Error('Missing param: email')
+                body: new MissingParamError('email')
             }
         }
 
