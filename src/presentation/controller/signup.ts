@@ -1,5 +1,7 @@
+import { HttpRequest, HttpResponse } from "../protocols/http"
+
 export class SignupController {
-    handle(httpRequest: any): any {
+    handle(httpRequest: HttpRequest): HttpResponse {
         const NoResourceFoundStatusCode = 400
         if (!httpRequest.body.name){
             return {
@@ -15,5 +17,9 @@ export class SignupController {
             }
         }
 
+        return {
+            statusCode: 200,
+            body: 'Success'
+        }
     }
 }
