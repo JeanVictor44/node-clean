@@ -32,9 +32,6 @@ const makeAddAccount = (): AddAccount => {
     return new AddAccountStub()
 }
 
-
-
-
 interface SutTypes {
     sut: SignupController,
     emailValidatorStub: EmailValidator
@@ -216,4 +213,25 @@ describe('SignUp Controller', () => {
         })
     })
 
+    test('Should return 500 if AddAccount throws', () => {
+        const  {addAccountStub, sut } = makeSut()
+
+        jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
+            throw new Error()
+        })
+
+        const httpRequest = {
+            body: {
+                email: 'invalid_email@mail.com',
+                name: 'anyname',
+                password: '123456',
+                passwordConfirmation: '123456'
+            }
+        }
+
+        const httpResponse = sut.handle(httpRequest)
+
+        expect(httpResponse.statusCode).toBe(500)
+        expect(httpResponse.body).toEqual(new ServerError())
+    })
 })
