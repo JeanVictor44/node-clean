@@ -107,7 +107,7 @@ describe('SignUp Controller', () => {
                 email: 'invalid_email@mail.com',
                 name: 'anyname',
                 password: '123456',
-                passwordConfirmation: 'anypassword'
+                passwordConfirmation: '123456'
             }
         }
 
@@ -127,7 +127,7 @@ describe('SignUp Controller', () => {
                 email: 'invalid_email@mail.com',
                 name: 'anyname',
                 password: '123456',
-                passwordConfirmation: 'anypassword'
+                passwordConfirmation: '123456'
             }
         }
 
@@ -141,13 +141,13 @@ describe('SignUp Controller', () => {
         jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
             throw new Error()
         })
-        
+
         const httpRequest = {
             body: {
                 email: 'invalid_email@mail.com',
                 name: 'anyname',
                 password: '123456',
-                passwordConfirmation: 'anypassword'
+                passwordConfirmation: '123456'
             }
         }
 
@@ -155,5 +155,21 @@ describe('SignUp Controller', () => {
 
         expect(httpResponse.statusCode).toBe(500)
         expect(httpResponse.body).toEqual(new ServerError())
+    })
+    test('Should return 400 if password confirmation fails ', () => {
+        const {sut} = makeSut();
+        const httpRequest = {
+            body: {
+                email: 'anymail@mail.com',
+                name: 'anyname',
+                password: '123456',
+                passwordConfirmation: 'invalidpassword'
+            }
+        }
+
+        const httpResponse = sut.handle(httpRequest)
+
+        expect(httpResponse.statusCode).toBe(400)
+        expect(httpResponse.body).toEqual(new InvalidParamError('passwordConfirmation'))
     })
 })
