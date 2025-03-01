@@ -3,11 +3,12 @@ import { badRequest, serverError } from "../helpers/http-helper"
 import { Controller, EmailValidator } from "../protocols"
 import { HttpRequest, HttpResponse } from "../protocols/http"
 
-
 export class SignupController implements Controller {
     constructor(private readonly emailValidator: EmailValidator){}
 
     handle(httpRequest: HttpRequest): HttpResponse {
+        const { email, password, passwordConfirmation } = httpRequest.body
+
         try {
             const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
             
@@ -17,16 +18,15 @@ export class SignupController implements Controller {
                 }
             }
             
-            if(httpRequest.body.password !== httpRequest.body.passwordConfirmation) {
+            if(password !== passwordConfirmation) {
                 return badRequest(new InvalidParamError('passwordConfirmation'))
             }
 
-            const isValidEmail = this.emailValidator.isValid(httpRequest.body.email)
+            const isValidEmail = this.emailValidator.isValid(email)
             
             if(!isValidEmail){
                 return badRequest(new InvalidParamError('email'))
             }
-
 
             return {
                 statusCode: 200,
