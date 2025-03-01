@@ -1,7 +1,5 @@
-import { AccountModel } from "../../domain/models/Account";
-import { AddAccount, AddAccountModel } from "../../domain/use-cases/add-account";
-import { InvalidParamError, MissingParamError, ServerError } from "../errors";
-import { EmailValidator } from "../protocols/email-validator";
+import { InvalidParamError, MissingParamError, ServerError } from "../../errors";
+import { EmailValidator,  AddAccount, AddAccountModel , AccountModel} from "./signup-protocols";
 import { SignupController } from "./signup";
 
 // Mockar com o case de sucesso
